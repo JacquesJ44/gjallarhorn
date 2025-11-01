@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "../utils/api";
+import api from "../utils/api";
 import BuildingCard from "./BuildingCard";
 
 const BuildingMap = () => {
@@ -13,7 +13,7 @@ const BuildingMap = () => {
   
   const fetchSensors = async () => {
     try {
-      const response = await axios.get("/api/status");
+      const response = await api.get("/status");
       // console.log("Fetching sensors", response.data);
       const sensorsArray = Object.entries(response.data || {}).map(
         ([building, data]) => ({

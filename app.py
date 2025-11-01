@@ -17,7 +17,7 @@ USERNAME = os.getenv("USER")
 PASSHASH = os.getenv("PASS")
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, origins=["https://status.aesirsystems.co.za"], supports_credentials=True)
 
 # Shared data dictionary for all routers
 ping_data = {}
@@ -111,4 +111,4 @@ if not getattr(app, "_monitoring_started", False):
     app._monitoring_started = True
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run()
