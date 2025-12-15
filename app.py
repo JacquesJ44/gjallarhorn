@@ -16,8 +16,17 @@ URL = os.getenv("URL")
 USERNAME = os.getenv("USER")
 PASSHASH = os.getenv("PASS")
 
-app = Flask(__name__)
-CORS(app)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+REACT_BUILD_DIR = os.path.join(BASE_DIR, "gjallarhorn-fe-vite", "dist")
+
+app = Flask(
+    __name__,
+    static_folder=REACT_BUILD_DIR,
+    static_url_path=""
+)
+
+# Apply CORS immediately after app creation
+CORS(app, supports_credentials=True, resources={r"/api/*": {"origins": "*"}}, allow_headers=["Content-Type", "Authorization"])
 
 # Shared data dictionary for all routers
 ping_data = {}
@@ -111,4 +120,4 @@ if not getattr(app, "_monitoring_started", False):
     app._monitoring_started = True
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run()
